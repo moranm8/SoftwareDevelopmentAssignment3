@@ -32,8 +32,6 @@ class Work():
             self.path_mat[self.curr_node][new_node] = 1 
             self.local_updating_rule(self.curr_node, new_node)
             self.curr_node = new_node
-            print not self.end()
-            print self.ntv
         self.path_cost += graph.delta(self.path_vec[-1], self.path_vec[0])
         self.grouping.update(self)
         self.__init__(self.ID, self.start_node, self.grouping)
@@ -227,7 +225,8 @@ import sys
 import traceback
 
 
-def main(argv):
+def main(argv):  
+    
     nm = 10                                     #Want to set default of nm to 10 [However the program crashes if the zeroth argument is not nm]
 
     if len(argv) >= 3 and argv[0]:              #If arguments are more than 3 take the zeroth argument as the number of cities request
@@ -278,6 +277,7 @@ def main(argv):
         print "\nBest path cost = %s\n" % (bpc,)
         results = [bpv, city_vec, bpc]
         pickle.dump(results, open(argv[2], 'w+'))
+        return bpc
     except Exception, e:
         print "exception: " + str(e)            #Print exception name
         traceback.print_exc()                   #Print out exception again in more detail
