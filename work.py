@@ -15,10 +15,10 @@ class Work():
         self.Beta = 1.0
         self.Q0 = 0.5
         self.Rho = 0.99
-        self.not_traveled_vector = {}                                       #empty dictionary[a data structure that maps one value to another]
+        self.not_traveled_vector = []                                       #empty dictionary[a data structure that maps one value to another]
         for i in range(0, self.graph.num_cities):
             if i != self.start_city:
-                self.not_traveled_vector[i] = i                             #Changes not_traveled_vector into a 1d array? Includes all city index other than stating city
+                self.not_traveled_vector.append(i)                             #Changes not_traveled_vector into a 1d array? Includes all city index other than stating city
         self.path_matrix = []
         for i in range(0, self.graph.num_cities):
            self.path_matrix.append([0] * self.graph.num_cities)    #Creates path_matrix as a num_city*num_city 2d array of 0s
@@ -49,7 +49,7 @@ class Work():
             #print "Exploitation"                           #This takes the city where the val is max
             max_val = -1                                    #Want the first val to be always bigger than max_val
             val = None
-            for city in self.not_traveled_vector.values():
+            for city in self.not_traveled_vector:
                 if graph.pheromone(current_city, city) == 0:
                     raise Exception("pheromone = 0")
                 val = graph.pheromone(current_city, city) * math.pow(graph.etha(current_city, city), self.Beta)
@@ -61,7 +61,7 @@ class Work():
             #print "Exploration"
             sum = 0
             city = -1
-            for city in self.not_traveled_vector.values():
+            for city in self.not_traveled_vector:
                 if graph.pheromone(current_city, city) == 0:
                     raise Exception("pheromone = 0")
                 sum += graph.pheromone(current_city, city) * math.pow(graph.etha(current_city, city), self.Beta)  #Smae as line 54
@@ -69,7 +69,7 @@ class Work():
                 raise Exception("sum = 0")
             avg = sum / len(self.not_traveled_vector)
             #print "avg = %s" % (avg,)
-            for city in self.not_traveled_vector.values():
+            for city in self.not_traveled_vector:
                 p = graph.pheromone(current_city, city) * math.pow(graph.etha(current_city, city), self.Beta)     #Same as line 54
                 if p > avg:
                     #print "p = %s" % (p,)
@@ -78,7 +78,7 @@ class Work():
                 max_city = city                 #If none satisfy p>avg then this, which will produce an exception in the next line
         if max_city < 0:
             raise Exception("max_city < 0")
-        del self.not_traveled_vector[max_city]                  #Delete from not_traveled_vector in either case
+        self.not_traveled_vector.remove(max_city)                  #Delete from not_traveled_vector in either case
         return max_city
 
     def local_updating_rule(self, current_city, next_city):
