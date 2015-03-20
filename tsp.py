@@ -22,9 +22,9 @@ def main(argv):
         num_iterations = 20
         num_repetitions = 1
 
-    stuff = pickle.load(open(argv[1], "r"))     #Load city info from filename(first argument) into stuff [we load unnecessary data]
-    city_name = stuff[0]                           #city_name = 1d array of names of cities?
-    city_distance = stuff[1]                               #city_distance = 2d array of distances between cities
+    cities = pickle.load(open(argv[1], "r"))     #Load city info from filename(first argument) into stuff [we load unnecessary data]
+    city_name = cities[0]                           #city_name = 1d array of names of cities?
+    city_distance = cities[1]                               #city_distance = 2d array of distances between cities
     #why are we doing this?
     if num_cities < len(city_distance):                            #Remove unnecessary data of cities which are not included [note: we do not do this with city names]
         city_distance = city_distance[0:num_cities]
