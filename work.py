@@ -40,45 +40,54 @@ class Work():
 
 
     def state_transition_rule(self, current_city):
-        graph = self.colony.graph
         q = random.random()
         max_city = -1
         if q < self.Q0:                                     #Is true half the time when Q0 is 0.5
-            #print "Exploitation"                           #This takes the city where the val is max
-            max_val = -1                                    #Want the first val to be always bigger than max_val
-            val = None
-            for city in self.not_traveled_vector:
-                if graph.pheromone(current_city, city) == 0:
-                    raise Exception("pheromone = 0")
-                val = graph.pheromone(current_city, city) / math.pow(graph.distance(current_city, city), self.Beta)
-                if val > max_val:
-                    max_val = val
-                    max_city = city
+            max_city = self.exploitation(current_city)
         else:
-            #print "Exploration"
-            sum = 0
-            city = -1
-            for city in self.not_traveled_vector:
-                if graph.pheromone(current_city, city) == 0:
-                    raise Exception("pheromone = 0")
-                sum += graph.pheromone(current_city, city) / math.pow(graph.distance(current_city, city), self.Beta)  #Smae as line 54
-            if sum == 0:
-                raise Exception("sum = 0")
-            avg = sum / len(self.not_traveled_vector)
-            #print "avg = %s" % (avg,)
-            for city in reversed(self.not_traveled_vector):
-                p = graph.pheromone(current_city, city) / math.pow(graph.distance(current_city, city), self.Beta)     #Same as line 54
-                if p > avg:
-                    #print "p = %s" % (p,)
-                    max_city = city             #We keep reassigning max city. Last city where p > avg will be max_city
-                    break
-            if max_city == -1:
-                max_city = city                 #If none satisfy p>avg then this, which will produce an exception in the next line
+            max_city = self.exploration(current_city)
         if max_city < 0:
             raise Exception("max_city < 0")
         self.not_traveled_vector.remove(max_city)                  #Delete from not_traveled_vector in either case
         return max_city
 
+    def exploitation(self, current_city):
+        graph = self.colony.graph
+        max_city = -1
+        max_val = -1                                    #Want the first val to be always bigger than max_val
+        val = None
+        for city in self.not_traveled_vector:
+            if graph.pheromone(current_city, city) == 0:
+                raise Exception("pheromone = 0")
+            val = graph.pheromone(current_city, city) / math.pow(graph.distance(current_city, city), self.Beta)
+            if val > max_val:
+                max_val = val
+                max_city = city   
+        return max_city
+            
+    def exploration(self, current_city):
+        graph = self.colony.graph
+        max_city = -1
+        sum = 0
+        city = -1
+        for city in self.not_traveled_vector:
+            if graph.pheromone(current_city, city) == 0:
+                raise Exception("pheromone = 0")
+            sum += graph.pheromone(current_city, city) / math.pow(graph.distance(current_city, city), self.Beta)  #Smae as line 54
+        if sum == 0:
+            raise Exception("sum = 0")
+        avg = sum / len(self.not_traveled_vector)
+        #print "avg = %s" % (avg,)
+        for city in reversed(self.not_traveled_vector):
+            p = graph.pheromone(current_city, city) / math.pow(graph.distance(current_city, city), self.Beta)     #Same as line 54
+            if p > avg:
+                #print "p = %s" % (p,)
+                max_city = city             #We keep reassigning max city. Last city where p > avg will be max_city
+                break
+        if max_city == -1:
+            max_city = city                 #If none satisfy p>avg then this, which will produce an exception in the next line
+        return max_city
+        
     def local_updating_rule(self, current_city, next_city):
         #Update the pheromones on the pheromone matrix to represent transitions of the ants
         graph = self.colony.graph
