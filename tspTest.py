@@ -1,9 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Mar 13 12:58:53 2015
-
-@author: martin
-"""
+#This program tests the travelling salesman problem program
 
 import random
 import unittest
@@ -16,7 +11,6 @@ import graphBit
 import bigGroup
 import sys
 
-import work
 
 class TestMain(unittest.TestCase):
     
@@ -180,8 +174,6 @@ class TestBigGroup(unittest.TestCase):
         self.workers.iter_counter=42
         self.assertEqual(self.workers.iteration_counter(), 42)
         
-    def test_update(self):
-        self.assertEqual(1, 1)
 
     def test_done(self):
         self.workers.iter_counter=4
@@ -189,12 +181,6 @@ class TestBigGroup(unittest.TestCase):
         self.workers.iter_counter=self.num_iterations
         self.assertEqual(self.workers.done(), 1)
         
-    def test_c_workers(self):
-        self.workers.c_workers
-        self.assertEqual(1, 1)
-        
-    def test_gloabal_update_rule(self):
-        self.assertEqual(1, 1)
         
 class TestWork(unittest.TestCase):
 

@@ -12,7 +12,7 @@ import variables
 
 def main(argv):  
 
-    if len(argv) >= 3:              #Take command line arguments as variables if they are provided
+    if len(argv) >= 3:                                                  #Take command line arguments as variables if they are provided
         num_cities = int(argv[0])
         input_file = argv[1]
         output_file = argv[2]
@@ -25,7 +25,7 @@ def main(argv):
     if num_cities <= 1:
         raise Exception("Specified too few cities")
 
-    if num_cities <= 10:                                #Variables chosen depends on the number of cities in simulation
+    if num_cities <= 10:                                                #Variables chosen depends on the number of cities in simulation
         num_ants = variables.small_num_ants                               
         num_iterations = variables.small_num_iterations
         num_repetitions = variables.small_num_repetitions                               
@@ -35,11 +35,11 @@ def main(argv):
         num_repetitions = variables.large_num_repetitions
         
 
-    cities = pickle.load(open(input_file, "r"))     #The input file should contain the names of the cities as well as the distances between them
+    cities = pickle.load(open(input_file, "r"))                         #The input file should contain the names of the cities as well as the distances between them
     city_name = cities[0]                           
     city_distance = cities[1]                               
     #why are we doing this?
-    if num_cities < len(city_distance):                            #Remove unnecessary data of cities which are not included
+    if num_cities < len(city_distance):                                 #Remove unnecessary data of cities which are not included
         city_distance = city_distance[0:num_cities]
         for i in range(0, num_cities):
             city_distance[i] = city_distance[i][0:num_cities]
@@ -70,8 +70,8 @@ def main(argv):
         pickle.dump(results, open(output_file, 'w+'))
         return best_path_cost
     except Exception, e:
-        print "exception: " + str(e)            #Print exception name
-        traceback.print_exc()                   #Print out exception again in more detail
+        print "exception: " + str(e)           
+        traceback.print_exc()                   
 
 
 if __name__ == "__main__":

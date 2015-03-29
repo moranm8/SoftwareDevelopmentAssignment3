@@ -22,7 +22,7 @@ class BigGroup:
         self.best_path_matrix = None
         self.last_best_path_iteration = 0
 
-    def start(self):                                                    #Runs the simulation for the required iterations
+    def start(self):                                #Runs the simulation for the required iterations
         self.ants = self.c_workers()
         self.iter_counter = 0
 
@@ -62,7 +62,7 @@ class BigGroup:
         self.reset()
         ants = []
         for i in range(0, self.num_ants):
-            ant = work.Work(i, random.randint(0, self.graph.num_cities - 1), self)  #Creates multiple instances of work, one for each ant
+            ant = work.Work(i, random.randint(0, self.graph.num_cities - 1), self)                  #Creates multiple instances of work, one for each ant
             ants.append(ant)
         return ants
  
@@ -73,5 +73,5 @@ class BigGroup:
             for s in range(0, self.graph.num_cities):
                 if r != s:
                     evaporation = (1 - self.Alpha) * self.graph.pheromone(r, s)
-                    deposition = self.Alpha * self.best_path_matrix[r][s] / self.best_path_cost                     #Consider removing delt_pheromone, only time used here
+                    deposition = self.Alpha * self.best_path_matrix[r][s] / self.best_path_cost     #Consider removing delt_pheromone, only time used here
                     self.graph.update_pheromone(r, s, evaporation + deposition)

@@ -1,3 +1,5 @@
+#This files contains user modifiable variables for the travelling salesman problem
+
 default_num_cities = 10
 default_input_file = "citiesAndDistances.pickled"
 default_output_file = "output.pickled"
