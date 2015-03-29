@@ -141,9 +141,11 @@ class TestBigGroup(unittest.TestCase):
         self.city_distance = cities[1]
         self.num_ants = 28
         self.num_iterations = 20
+        self.num_repetitions = 1
+        self.completed_repetitions = 0
         self.graph = graphBit.GraphBit(self.num_cities, self.city_distance)
         self.graph.reset_pheromone()
-        self.workers = bigGroup.BigGroup(self.graph, self.num_ants, self.num_iterations)
+        self.workers = bigGroup.BigGroup(self.graph, self.num_ants, self.num_iterations,self.num_repetitions,self.completed_repetitions)
 
     def test_reset(self):
         self.workers.best_path_cost = 1

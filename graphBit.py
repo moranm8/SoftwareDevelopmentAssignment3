@@ -1,7 +1,7 @@
 
 class GraphBit:
     def __init__(self, num_cities, city_distance, pheromone_matrix=None):     #num_cities = num_cities =number of cities; city_distance = city_distance = 2d array of distances between cities
-        print len(city_distance)
+        #print len(city_distance)
         if len(city_distance) != num_cities:
             raise Exception("len(city_distance) != num_cities")
         self.num_cities = num_cities
@@ -26,8 +26,8 @@ class GraphBit:
     def reset_pheromone(self):
         avg = self.average_distance()
         self.pheromone0 = 1.0 / (self.num_cities * 0.5 * avg)           #Does this even do anything useful
-        print "Average = %s" % (avg,)
-        print "pheromone0 = %s" % (self.pheromone0)
+        #print "Average = %s" % (avg,)
+        #print "pheromone0 = %s" % (self.pheromone0)
         for r in range(0, self.num_cities):
             for s in range(0, self.num_cities):
                 self.pheromone_matrix[r][s] = self.pheromone0

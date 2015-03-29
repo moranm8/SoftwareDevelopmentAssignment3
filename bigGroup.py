@@ -6,10 +6,12 @@ import variables
 
 
 class BigGroup:
-    def __init__(self, graph, num_ants, num_iterations):            #graph = GraphBit; num_ants = na, num_iterations = num_iterations
+    def __init__(self, graph, num_ants, num_iterations, num_repetitions, completed_repetitions):            #graph = GraphBit; num_ants = na, num_iterations = num_iterations
         self.graph = graph
         self.num_ants = num_ants
         self.num_iterations = num_iterations
+        self.num_repetitions = num_repetitions
+        self.completed_repetitions = completed_repetitions
         self.Alpha = variables.Alpha
         self.reset()
 
@@ -55,8 +57,8 @@ class BigGroup:
             self.last_best_path_iteration = self.iter_counter                   #Never used. Consider removing
         if self.ant_counter == len(self.ants):                                  #Could make more sense if we move this to global_update_rule
             self.avg_path_cost /= len(self.ants)
-            print "Best: %s, %s, %s, %s" % (
-                self.best_path_vector, self.best_path_cost, self.iter_counter, self.avg_path_cost,)
+            print "%s %%" % ((float(self.iter_counter)/(self.num_iterations*self.num_repetitions)+float(self.completed_repetitions)/self.num_repetitions)*100)
+            #print "Best: %s, %s, %s, %s" % (self.best_path_vector, self.best_path_cost, self.iter_counter, self.avg_path_cost,)
 
 
     def done(self):                                                             #Never used. Consider removing

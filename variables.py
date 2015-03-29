@@ -4,7 +4,7 @@ default_output_file = "output.pickled"
 
 small_num_ants = 20
 small_num_iterations = 12
-small_num_repetitions = 1
+small_num_repetitions = 2
 
 large_num_ants = 28
 large_num_iterations = 20

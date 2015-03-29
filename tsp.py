@@ -42,13 +42,13 @@ def main(argv):
         best_path_vector = None
         best_path_cost = sys.maxint
         for i in range(0, num_repetitions):
-            print "Repetition %s" % i
+            #print "Repetition %s" % i
             graph.reset_pheromone()
-            workers = bigGroup.BigGroup(graph, num_ants, num_iterations)   #Initializes the BigGroup class
-            print "Colony Started"
+            workers = bigGroup.BigGroup(graph, num_ants, num_iterations, num_repetitions, i)   #Initializes the BigGroup class
+            #print "Colony Started"
             workers.start()
             if workers.best_path_cost < best_path_cost:
-                print "Colony Path"
+                #print "Colony Path"
                 best_path_vector = workers.best_path_vector
                 best_path_cost = workers.best_path_cost
 
