@@ -1,6 +1,7 @@
 
 import math
 import random
+import variables
 
 class Work():
     def __init__(self, ID, start_city, colony):             #ID = i; start_city=random; colony = BigGroup
@@ -12,9 +13,9 @@ class Work():
         self.path_vector = []                               #Could combine these two lines
         self.path_vector.append(self.start_city)
         self.path_cost = 0
-        self.Beta = 1.0
-        self.Q0 = 0.5
-        self.Rho = 0.99
+        self.Beta = variables.Beta
+        self.Q0 = variables.Q0
+        self.Rho = variables.Rho
         self.not_traveled_vector = []                                       #empty dictionary[a data structure that maps one value to another]
         for i in range(0, self.graph.num_cities):
             if i != self.start_city:

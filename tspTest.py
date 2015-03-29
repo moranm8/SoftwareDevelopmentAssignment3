@@ -80,6 +80,16 @@ class TestMain(unittest.TestCase):
         self.bpc=tsp.main(self.argv)
         self.assertEqual(self.bpc, 5760)
         
+    def test_main13(self):
+        self.argv=[13,"citiesAndDistances.pickled","output.pickled"]
+        self.bpc=tsp.main(self.argv)
+        self.assertEqual(self.bpc, 5868)
+        
+    def test_main14(self):
+        self.argv=[14,"citiesAndDistances.pickled","output.pickled"]
+        self.bpc=tsp.main(self.argv)
+        self.assertEqual(self.bpc, 6115)
+        
 class TestGraphBit(unittest.TestCase):
 
     def setUp(self):
@@ -184,9 +194,16 @@ class TestBigGroup(unittest.TestCase):
     def test_gloabal_update_rule(self):
         self.assertEqual(1, 1)
 if __name__ == '__main__':
-    suiteMain = unittest.TestLoader().loadTestsFromTestCase(TestMain)
-    suiteGraphBit = unittest.TestLoader().loadTestsFromTestCase(TestGraphBit)
-    suiteBigGroup = unittest.TestLoader().loadTestsFromTestCase(TestBigGroup)
-    unittest.TextTestRunner(verbosity=2).run(suiteMain)
-    unittest.TextTestRunner(verbosity=2).run(suiteGraphBit)
-    unittest.TextTestRunner(verbosity=2).run(suiteBigGroup)
+    test_classes_to_run = [TestMain, TestGraphBit, TestBigGroup]
+
+    loader = unittest.TestLoader()
+
+    suites_list = []
+    for test_class in test_classes_to_run:
+        suite = loader.loadTestsFromTestCase(test_class)
+        suites_list.append(suite)
+
+    big_suite = unittest.TestSuite(suites_list)
+
+    runner = unittest.TextTestRunner()
+    results = runner.run(big_suite)

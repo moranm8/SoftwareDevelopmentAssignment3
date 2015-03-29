@@ -4,25 +4,30 @@ import sys
 import traceback
 import graphBit
 import bigGroup
+import variables
 
 
 def main(argv):  
-    
-    num_cities = 10                                     #Want to set default of num_cities to 10 [However the program crashes if the zeroth argument is not num_cities]
 
     if len(argv) >= 3 and argv[0]:              #If arguments are more than 3 take the zeroth argument as the number of cities request
         num_cities = int(argv[0])                       #num_cities = number of cities
+        input_file = argv[1]
+        output_file = argv[2]
+    else:
+        num_cities = variables.default_num_cities                       #num_cities = number of cities
+        input_file = variables.default_input_file
+        output_file = variables.default_output_file
 
     if num_cities <= 10:                                #If number of cities is 10 or less set variables na,num_iterations and num_repetitions
-        num_ants = 20                                 #num_ants = number of ants?
-        num_iterations = 12                                 #num_iterations = number of iterations
-        num_repetitions = 1                                  #num_repetitions = number of repetitions
+        num_ants = variables.small_num_ants                               #num_ants = number of ants?
+        num_iterations = variables.small_num_iterations                                 #num_iterations = number of iterations
+        num_repetitions = variables.small_num_repetitions                                  #num_repetitions = number of repetitions
     else:
-        num_ants = 28
-        num_iterations = 20
-        num_repetitions = 1
+        num_ants = variables.large_num_ants
+        num_iterations = variables.large_num_iterations
+        num_repetitions = variables.large_num_repetitions
 
-    cities = pickle.load(open(argv[1], "r"))     #Load city info from filename(first argument) into stuff [we load unnecessary data]
+    cities = pickle.load(open(input_file, "r"))     #Load city info from filename(first argument) into stuff [we load unnecessary data]
     city_name = cities[0]                           #city_name = 1d array of names of cities?
     city_distance = cities[1]                               #city_distance = 2d array of distances between cities
     #why are we doing this?
@@ -57,7 +62,7 @@ def main(argv):
             city_vector.append(city_name[city])
         print "\nBest path cost = %s\n" % (best_path_cost,)
         results = [best_path_vector, city_vector, best_path_cost]
-        pickle.dump(results, open(argv[2], 'w+'))
+        pickle.dump(results, open(output_file, 'w+'))
         return best_path_cost
     except Exception, e:
         print "exception: " + str(e)            #Print exception name

@@ -2,7 +2,7 @@
 import random
 import sys
 import work
-
+import variables
 
 
 class BigGroup:
@@ -10,7 +10,7 @@ class BigGroup:
         self.graph = graph
         self.num_ants = num_ants
         self.num_iterations = num_iterations
-        self.Alpha = 0.1
+        self.Alpha = variables.Alpha
         self.reset()
 
     def reset(self):
