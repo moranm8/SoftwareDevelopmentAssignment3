@@ -35,10 +35,10 @@ class BigGroup:
         for ant in self.ants:
             ant.run()
 
-    def num_ants(self):
+    def number_of_ants(self):                                         
         return len(self.ants)
 
-    def num_iterations(self):
+    def number_of_iterations(self):
         return self.num_iterations
 
     def iteration_counter(self):

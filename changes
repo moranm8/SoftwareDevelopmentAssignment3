@@ -1,0 +1,11 @@
+List of changes
+nm -> num_cities
+na -> num_ants
+ni -> num_iterations
+nr -> num_repetitions
+cities -> city_name
+cm -> city_distance
+bpc -> best_path_cost
+bpv -> best_bath_list
+num_nodes -> num_cities
+delta_mat -> city_distance
