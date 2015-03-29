@@ -50,28 +50,28 @@ class Work():
             for city in self.not_traveled_vector:
                 if graph.pheromone(current_city, city) == 0:
                     raise Exception("pheromone = 0")
-                val = graph.pheromone(current_city, city) * math.pow(graph.etha(current_city, city), self.Beta)
+                val = graph.pheromone(current_city, city) / math.pow(graph.distance(current_city, city), self.Beta)
                 if val > max_val:
                     max_val = val
                     max_city = city
         else:
-            #Bob was here
             #print "Exploration"
             sum = 0
             city = -1
             for city in self.not_traveled_vector:
                 if graph.pheromone(current_city, city) == 0:
                     raise Exception("pheromone = 0")
-                sum += graph.pheromone(current_city, city) * math.pow(graph.etha(current_city, city), self.Beta)  #Smae as line 54
+                sum += graph.pheromone(current_city, city) / math.pow(graph.distance(current_city, city), self.Beta)  #Smae as line 54
             if sum == 0:
                 raise Exception("sum = 0")
             avg = sum / len(self.not_traveled_vector)
             #print "avg = %s" % (avg,)
-            for city in self.not_traveled_vector:
-                p = graph.pheromone(current_city, city) * math.pow(graph.etha(current_city, city), self.Beta)     #Same as line 54
+            for city in reversed(self.not_traveled_vector):
+                p = graph.pheromone(current_city, city) / math.pow(graph.distance(current_city, city), self.Beta)     #Same as line 54
                 if p > avg:
                     #print "p = %s" % (p,)
                     max_city = city             #We keep reassigning max city. Last city where p > avg will be max_city
+                    break
             if max_city == -1:
                 max_city = city                 #If none satisfy p>avg then this, which will produce an exception in the next line
         if max_city < 0:
