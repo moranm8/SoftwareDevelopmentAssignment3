@@ -27,7 +27,7 @@ class Work():
     #could this be simpler?
     def run(self):
         graph = self.colony.graph                         #graph = GraphBit. No need to redefine, could just refence as self.graph
-        while not self.end():
+        while len(self.not_traveled_vector)>0:
             new_city = self.state_transition_rule(self.current_city)
             self.path_cost += graph.distance(self.current_city, new_city)
             self.path_vector.append(new_city)
@@ -37,9 +37,6 @@ class Work():
         self.path_cost += graph.distance(self.path_vector[-1], self.path_vector[0])
         self.colony.update(self)
         self.__init__(self.ID, self.start_city, self.colony)                    #Consider removing. Affects RNG? Resets not_traveled vector
-
-    def end(self):
-        return not self.not_traveled_vector                                 #self.not_traveled_vector always equals 0? Returns 1?
 
 
     def state_transition_rule(self, current_city):
