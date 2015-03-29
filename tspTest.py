@@ -61,7 +61,7 @@ class TestMain(unittest.TestCase):
     def test_main9(self):
         self.argv=[9,"citiesAndDistances.pickled","output.pickled"]
         self.bpc=tsp.main(self.argv)
-        self.assertEqual(self.bpc, 5444)
+        self.assertEqual(self.bpc, 5455)
         
     def test_main10(self):
         self.argv=[10,"citiesAndDistances.pickled","output.pickled"]
@@ -195,6 +195,12 @@ class TestBigGroup(unittest.TestCase):
         
     def test_gloabal_update_rule(self):
         self.assertEqual(1, 1)
+        
+class TestWork(unittest.TestCase):
+
+    def setUp(self):
+        random.seed(1)        
+
 if __name__ == '__main__':
     test_classes_to_run = [TestMain, TestGraphBit, TestBigGroup]
 
