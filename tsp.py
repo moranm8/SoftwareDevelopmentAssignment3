@@ -9,14 +9,18 @@ import variables
 
 def main(argv):  
 
-    if len(argv) >= 3 and argv[0]:              #If arguments are more than 3 take the zeroth argument as the number of cities request
+    if len(argv) >= 3:              #If arguments are more than 3 take the zeroth argument as the number of cities request
         num_cities = int(argv[0])                       #num_cities = number of cities
         input_file = argv[1]
         output_file = argv[2]
+        print "Using command line options\nNumber of cities: %s\nInput file: %s\nOutput file: %s" % (num_cities, input_file, output_file)
     else:
         num_cities = variables.default_num_cities                       #num_cities = number of cities
         input_file = variables.default_input_file
         output_file = variables.default_output_file
+        print "Not enough command line options \nUsing values from variables.py: \nNumber of cities: %s\nInput file: %s\nOutput file: %s" % (num_cities, input_file, output_file)
+    if num_cities <= 1:
+        raise Exception("Specified too few cities")
 
     if num_cities <= 10:                                #If number of cities is 10 or less set variables na,num_iterations and num_repetitions
         num_ants = variables.small_num_ants                               #num_ants = number of ants?
@@ -26,6 +30,7 @@ def main(argv):
         num_ants = variables.large_num_ants
         num_iterations = variables.large_num_iterations
         num_repetitions = variables.large_num_repetitions
+        
 
     cities = pickle.load(open(input_file, "r"))     #Load city info from filename(first argument) into stuff [we load unnecessary data]
     city_name = cities[0]                           #city_name = 1d array of names of cities?
