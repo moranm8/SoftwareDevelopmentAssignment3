@@ -25,7 +25,6 @@ class Work():
         for i in range(0, self.graph.num_cities):
            self.path_matrix.append([0] * self.graph.num_cities)
 
-    #could this be simpler?
     def run(self):
         graph = self.colony.graph
         while len(self.not_traveled_vector)>0:
@@ -40,7 +39,7 @@ class Work():
         self.__init__(self.ID, self.start_city, self.colony)
 
 
-    def state_transition_rule(self, current_city):
+    def state_transition_rule(self, current_city):                              #Decides whether an ant explores or exploits
         q = random.random()
         max_city = -1
         if q < self.Q0:
@@ -52,7 +51,7 @@ class Work():
         self.not_traveled_vector.remove(max_city)
         return max_city
 
-    def exploitation(self, current_city):
+    def exploitation(self, current_city):                                       #Ant will move to the city with the highest phermone level from the current city
         graph = self.colony.graph
         max_city = -1
         max_val = -1
@@ -66,7 +65,7 @@ class Work():
                 max_city = city   
         return max_city
             
-    def exploration(self, current_city):
+    def exploration(self, current_city):                                        #Ant will move to the last city which has higher than average pheremone levels
         graph = self.colony.graph
         max_city = -1
         sum = 0
@@ -88,7 +87,7 @@ class Work():
             max_city = city
         return max_city
         
-    def local_updating_rule(self, current_city, next_city):
+    def local_updating_rule(self, current_city, next_city):                     #Updates pheremone level between the two cities the ant is travelling between
         #Update the pheromones on the pheromone matrix to represent transitions of the ants
         graph = self.colony.graph
         val = (1 - self.Rho) * graph.pheromone(current_city, next_city) + (self.Rho * graph.pheromone0)

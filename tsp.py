@@ -38,7 +38,6 @@ def main(argv):
     cities = pickle.load(open(input_file, "r"))                         #The input file should contain the names of the cities as well as the distances between them
     city_name = cities[0]                           
     city_distance = cities[1]                               
-    #why are we doing this?
     if num_cities < len(city_distance):                                 #Remove unnecessary data of cities which are not included
         city_distance = city_distance[0:num_cities]
         for i in range(0, num_cities):

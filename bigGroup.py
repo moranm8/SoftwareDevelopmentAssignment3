@@ -16,13 +16,13 @@ class BigGroup:
         self.Alpha = variables.Alpha
         self.reset()
 
-    def reset(self):
+    def reset(self):                                #Resets best path
         self.best_path_cost = sys.maxint
         self.best_path_vector = None
         self.best_path_matrix = None
         self.last_best_path_iteration = 0
 
-    def start(self):                                #Runs the simulation for the required iterations
+    def start(self):                                #Sets up ants and runs the simulation
         self.ants = self.c_workers()
         self.iter_counter = 0
 
@@ -30,7 +30,7 @@ class BigGroup:
             self.iteration()
             self.global_updating_rule()
 
-    def iteration(self):
+    def iteration(self):                            #Runs ants for required iterations
         self.avg_path_cost = 0
         self.ant_counter = 0
         self.iter_counter += 1
@@ -58,7 +58,7 @@ class BigGroup:
     def done(self):
         return self.iter_counter == self.num_iterations
 
-    def c_workers(self):
+    def c_workers(self):                            #Sets up ants
         self.reset()
         ants = []
         for i in range(0, self.num_ants):
@@ -66,12 +66,12 @@ class BigGroup:
             ants.append(ant)
         return ants
  
-    def global_updating_rule(self):
+    def global_updating_rule(self):                 #Outputs percentage completion and updates pheremones
         self.avg_path_cost /= len(self.ants)
         print "%s %%" % ((float(self.iter_counter)/(self.num_iterations*self.num_repetitions)+float(self.completed_repetitions)/self.num_repetitions)*100)
         for r in range(0, self.graph.num_cities):
             for s in range(0, self.graph.num_cities):
                 if r != s:
                     evaporation = (1 - self.Alpha) * self.graph.pheromone(r, s)
-                    deposition = self.Alpha * self.best_path_matrix[r][s] / self.best_path_cost     #Consider removing delt_pheromone, only time used here
+                    deposition = self.Alpha * self.best_path_matrix[r][s] / self.best_path_cost
                     self.graph.update_pheromone(r, s, evaporation + deposition)
